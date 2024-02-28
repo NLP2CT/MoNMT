@@ -1,0 +1,4 @@
+entry_point: pipeline_template.PipelineTemplate
+env:
+  conda: /mnt/nas/users/pangjianhui.pjh/anaconda3#py38fairseq
+params:

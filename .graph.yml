@@ -1,0 +1,116 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  annotations:
+    pipelines.kubeflow.org/kfp_sdk_version: 1.8.10
+    pipelines.kubeflow.org/pipeline_compilation_time: '2022-07-13T11:03:51.431101'
+    pipelines.kubeflow.org/pipeline_spec: '{"description": "The Graformer-local pipeline
+      is generated automatically by silkflow.", "name": "Graformer-local"}'
+  generateName: graformer-local-
+  labels:
+    NB_USER: pangjianhui.pjh
+    pipelines.kubeflow.org/kfp_sdk_version: 1.8.10
+spec:
+  arguments:
+    parameters: []
+  dnsPolicy: ClusterFirstWithHostNet
+  entrypoint: graformer-local
+  hostNetwork: true
+  podPriorityClassName: normal-priority
+  serviceAccountName: pipeline-runner
+  templates:
+  - dag:
+      tasks:
+      - name: mer-local-20220713-11-03-50-1972
+        template: mer-local-20220713-11-03-50-1972
+    name: graformer-local
+  - affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: resource-group.bach.io/silkflow
+              operator: Exists
+            - key: sigma.ali/site
+              operator: NotIn
+              values:
+              - nt12
+            - key: sigma.ali/node-sn
+              operator: In
+              values:
+              - qtfcu19490004
+              - QTFCU19490004
+    container:
+      args:
+      - -c
+      - 'echo "run PipelineTemplate/Graformer-local-20220713-11_03_50 ...
+
+        " && echo ''{{workflow.name}}'' > /step-name.txt && chmod +x /mnt/nas/users/pangjianhui.pjh/Graformer-local/silkflow_detail/meta/PipelineTemplate/Graformer-local-20220713-11_03_50/run.sh
+        && /mnt/nas/users/pangjianhui.pjh/Graformer-local/silkflow_detail/meta/PipelineTemplate/Graformer-local-20220713-11_03_50/run.sh'
+      command:
+      - sh
+      env:
+      - name: NB_UID
+        value: '1374099'
+      - name: NB_USER
+        value: pangjianhui.pjh
+      - name: SF_PROXY_USER
+        value: pangjianhui.pjh
+      - name: SF_TASK_PATH
+        value: /mnt/nas/users/pangjianhui.pjh/Graformer-local/silkflow_detail/meta/PipelineTemplate/Graformer-local-20220713-11_03_50
+      - name: SF_POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      image: reg.docker.alibaba-inc.com/silkflow/pytorch:1.7-cuda10.1-cudnn7-fairseq-apex-fix
+      resources:
+        limits:
+          cpu: '12'
+          memory: 64G
+          nvidia.com/gpu: '1'
+        requests:
+          cpu: '12'
+          memory: 64G
+      volumeMounts:
+      - mountPath: /mnt/nas
+        name: mer-local-20220713-11-03-50-1972
+      - mountPath: /dev/shm
+        name: cache-volume
+      - mountPath: /etc/pod-info
+        name: pod-info
+        readOnly: true
+    metadata:
+      labels:
+        NB_USER: pangjianhui.pjh
+        NUM_GPU: '1'
+        pipelines.kubeflow.org/enable_caching: 'true'
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.10
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+    name: mer-local-20220713-11-03-50-1972
+    tolerations:
+    - effect: NoSchedule
+      key: alibabacloud.com/partition
+      value: gpu
+    - effect: NoSchedule
+      key: sigma.ali/resource-pool
+      value: sigma_public
+    - effect: NoSchedule
+      key: sigma.ali/is-ecs
+      operator: Exists
+    volumes:
+    - emptyDir:
+        medium: Memory
+        sizeLimit: 512Mi
+      name: cache-volume
+    - name: mer-local-20220713-11-03-50-1972
+      persistentVolumeClaim:
+        claimName: silkflow-pvc
+    - downwardAPI:
+        items:
+        - fieldRef:
+            fieldPath: metadata.labels
+          path: labels
+        - fieldRef:
+            fieldPath: metadata.annotations
+          path: annotations
+      name: pod-info
