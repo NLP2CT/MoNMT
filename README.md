@@ -6,7 +6,7 @@ MoNMT: Modularly Leveraging Monolingual and Bilingual Knowledge for Neural Machi
 </p>
 
 # Environment
-- The code is based on the [fairseq](https://github.com/facebookresearch/fairseq) toolkit, version 1.0.0a0, forked from [Graformer](https://github.com/sunzewei2715/Graformer) codebase.
+- The code is based on the [fairseq](https://github.com/facebookresearch/fairseq) toolkit, version 1.0.0a0, forked from the [Graformer](https://github.com/sunzewei2715/Graformer) codebase.
 - python 3.8
 
 # Training
