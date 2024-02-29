@@ -1,6 +1,10 @@
 # MoNMT
 MoNMT: Modularly Leveraging Monolingual and Bilingual Knowledge for Neural Machine Translation
 
+<p align="center">
+<img src="./model-two-stages-training-5.png" width="700" />
+</p>
+
 # Environment
 - The code is based on the [fairseq](https://github.com/facebookresearch/fairseq) toolkit, version 1.0.0a0, forked from [Graformer](https://github.com/sunzewei2715/Graformer) codebase.
 - python 3.8
